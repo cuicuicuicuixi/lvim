@@ -127,16 +127,27 @@ lvim.plugins = {
   {
     "simrat39/rust-tools.nvim",
     ft = "rust",
-    opts = {
-      server = {
-        on_attach = function(_, bufnr)
-          -- Hover actions
-          -- vim.keymap.set("n", "<Space>ha", require("rust-tools").hover_actions.hover_actions, { buffer = bufnr })
-          -- Code action groups
-          -- vim.keymap.set("n", "<Leader>a", require("rust-tools").code_action_group.code_action_group, { buffer = bufnr })
-        end,
+  },
+  {
+    "saecki/crates.nvim",
+    version = "v0.3.0",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("crates").setup {
+        null_ls = {
+          enabled = true,
+          name = "crates.nvim",
+        },
+        popup = {
+          border = "rounded",
+        },
       }
-
-    }
-  }
+    end,
+  },
+  {
+    "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup()
+    end,
+  },
 }
