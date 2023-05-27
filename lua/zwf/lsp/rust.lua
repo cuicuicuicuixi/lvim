@@ -92,6 +92,24 @@ lvim.builtin.dap.on_config_done = function(dap)
       stopOnEntry = false,
     },
   }
+  dap.configurations.cpp = {
+    {
+      name = "Launch file",
+      type = "codelldb",
+      request = "launch",
+      program = function()
+        local path
+        vim.ui.input({ prompt = "Path to executable: ", default = vim.loop.cwd() .. "/build/" }, function(input)
+          path = input
+        end)
+        vim.cmd [[redraw]]
+        return path
+      end,
+      cwd = "${workspaceFolder}",
+      stopOnEntry = false,
+    },
+  }
+  dap.configurations.c = dap.configurations.cpp
 end
 
 lvim.builtin.which_key.mappings["R"] = {
@@ -116,9 +134,9 @@ lvim.builtin.which_key.mappings["R"] = {
 }
 
 vim.api.nvim_create_autocmd("BufRead", {
-    group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
-    pattern = "Cargo.toml",
-    callback = function()
-        require("cmp").setup.buffer({ sources = { { name = "crates" } } })
-    end,
+  group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
+  pattern = "Cargo.toml",
+  callback = function()
+    require("cmp").setup.buffer({ sources = { { name = "crates" } } })
+  end,
 })
