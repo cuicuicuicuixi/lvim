@@ -11,9 +11,19 @@ lvim.plugins = {
       }
     },
   },
-  { "mfussenegger/nvim-dap-python" },
-  { "nvim-neotest/neotest" },
-  { "nvim-neotest/neotest-python" },
+  {
+    "mfussenegger/nvim-dap-python",
+    ft = { "python" },
+  },
+  {
+    "nvim-neotest/neotest",
+    event = { "BufReadPre", "BufNewFile" },
+  },
+  {
+    "nvim-neotest/neotest-python",
+    dependencies = { "nvim-neotest/neotest" },
+    ft = { "python" },
+  },
   {
     "kevinhwang91/nvim-bqf",
     event = { "BufRead", "BufNew" },
@@ -60,6 +70,7 @@ lvim.plugins = {
   },
   {
     "norcalli/nvim-colorizer.lua",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("colorizer").setup(
         { "*" },
@@ -103,33 +114,34 @@ lvim.plugins = {
       }
     end,
   },
-  {
-    "echasnovski/mini.indentscope",
-    version = false, -- wait till new 0.7.0 release to put it back on semver
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      -- symbol = "▏",
-      symbol = "│",
-      options = { try_as_border = true },
-    },
-    init = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
-        callback = function()
-          vim.b.miniindentscope_disable = true
-        end,
-      })
-    end,
-    config = function(_, opts)
-      require("mini.indentscope").setup(opts)
-    end,
-  },
+  -- {
+  --   "echasnovski/mini.indentscope",
+  --   version = false, -- wait till new 0.7.0 release to put it back on semver
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   opts = {
+  --     -- symbol = "▏",
+  --     symbol = "│",
+  --     options = { try_as_border = true },
+  --   },
+  --   init = function()
+  --     vim.api.nvim_create_autocmd("FileType", {
+  --       pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
+  --       callback = function()
+  --         vim.b.miniindentscope_disable = true
+  --       end,
+  --     })
+  --   end,
+  --   config = function(_, opts)
+  --     require("mini.indentscope").setup(opts)
+  --   end,
+  -- },
   {
     "simrat39/rust-tools.nvim",
     ft = "rust",
   },
   {
     "saecki/crates.nvim",
+    ft = { "toml" },
     version = "v0.3.0",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
@@ -146,6 +158,7 @@ lvim.plugins = {
   },
   {
     "j-hui/fidget.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("fidget").setup()
     end,
@@ -165,4 +178,8 @@ lvim.plugins = {
       })
     end
   },
+  {
+    "nvim-treesitter/playground",
+    event = { "BufReadPre", "BufNewFile" },
+  }
 }
