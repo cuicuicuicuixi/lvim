@@ -5,5 +5,6 @@
 
 reload("zwf.options")
 reload("zwf.keymaps")
+reload("zwf.autocommand")
 reload("zwf.config.plugins")
 require("zwf.lsp.rust")

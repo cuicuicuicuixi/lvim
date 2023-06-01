@@ -153,8 +153,16 @@ lvim.plugins = {
   {
     "p00f/clangd_extensions.nvim",
     ft = { "c", "cpp" },
-    config = function ()
+    config = function()
       require("clangd_extensions").setup()
     end,
+  },
+  {
+    "mickael-menu/zk-nvim",
+    config = function()
+      require("zk").setup({
+        -- See Setup section below
+      })
+    end
   },
 }
