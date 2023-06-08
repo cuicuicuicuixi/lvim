@@ -109,6 +109,7 @@ lvim.builtin.dap.on_config_done = function(dap)
       stopOnEntry = false,
     },
   }
+
   dap.configurations.c = dap.configurations.cpp
 end
 

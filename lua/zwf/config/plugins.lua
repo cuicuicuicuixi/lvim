@@ -114,27 +114,27 @@ lvim.plugins = {
       }
     end,
   },
-  -- {
-  --   "echasnovski/mini.indentscope",
-  --   version = false, -- wait till new 0.7.0 release to put it back on semver
-  --   event = { "BufReadPre", "BufNewFile" },
-  --   opts = {
-  --     -- symbol = "▏",
-  --     symbol = "│",
-  --     options = { try_as_border = true },
-  --   },
-  --   init = function()
-  --     vim.api.nvim_create_autocmd("FileType", {
-  --       pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
-  --       callback = function()
-  --         vim.b.miniindentscope_disable = true
-  --       end,
-  --     })
-  --   end,
-  --   config = function(_, opts)
-  --     require("mini.indentscope").setup(opts)
-  --   end,
-  -- },
+  {
+    "echasnovski/mini.indentscope",
+    version = false, -- wait till new 0.7.0 release to put it back on semver
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      -- symbol = "▏",
+      symbol = "│",
+      options = { try_as_border = true },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
+        callback = function()
+          vim.b.miniindentscope_disable = true
+        end,
+      })
+    end,
+    config = function(_, opts)
+      require("mini.indentscope").setup(opts)
+    end,
+  },
   {
     "simrat39/rust-tools.nvim",
     ft = "rust",
@@ -181,5 +181,86 @@ lvim.plugins = {
   {
     "nvim-treesitter/playground",
     event = { "BufReadPre", "BufNewFile" },
+  },
+  {
+    "folke/edgy.nvim",
+    event = "VeryLazy",
+    keys = {
+      -- stylua: ignore
+      { "<leader>ue", function() require("edgy").select() end, desc = "Edgy Select Window" },
+    },
+    opts = {
+      bottom = {
+        -- toggleterm / lazyterm at the bottom with a height of 40% of the screen
+        {
+          ft = "toggleterm",
+          size = { height = 0.2 },
+          -- exclude floating windows
+          filter = function(buf, win)
+            return vim.api.nvim_win_get_config(win).relative == ""
+          end,
+        },
+        {
+          ft = "help",
+          size = { height = 20 },
+          -- don't open help files in edgy that we're editing
+          filter = function(buf)
+            return vim.bo[buf].buftype == "help"
+          end,
+        },
+      },
+      left = {
+        {
+          ft = "nvim-tree",
+          open = "NvimTreeToggle",
+        }
+      }
+    }
+  },
+  -- {
+  --   'kevinhwang91/nvim-ufo',
+  --   event = 'VimEnter',
+  --   dependencies = { 'kevinhwang91/promise-async' },
+  --   config = function ()
+  --     require("zwf.config.ufo")
+  --   end
+  -- },
+  {
+    "rebelot/kanagawa.nvim",
+    opts = {
+      dimInactive = true,
+      colors = {
+        theme = {
+          all = {
+            ui = {
+              bg_gutter = "none"
+            }
+          }
+        }
+      },
+      overrides = function(colors)
+        local theme = colors.theme
+        return {
+          NormalFloat = { bg = "none" },
+          FloatBorder = { bg = "none" },
+          FloatTitle = { bg = "none" },
+
+          -- Save an hlgroup with dark background and dimmed foreground
+          -- so that you can use it where your still want darker windows.
+          -- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
+          NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
+
+          -- Popular plugins that open floats will link to NormalFloat by default;
+          -- set their background accordingly if you wish to keep them dark and borderless
+          LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+          MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+
+          Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 }, -- add `blend = vim.o.pumblend` to enable transparency
+          PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
+          PmenuSbar = { bg = theme.ui.bg_m1 },
+          PmenuThumb = { bg = theme.ui.bg_p2 },
+        }
+      end,
+    }
   }
 }
