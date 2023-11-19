@@ -5,6 +5,7 @@ lvim.builtin.nvimtree.setup.git.ignore = true
 lvim.builtin.treesitter.matchup.enable = true
 require("telescope").load_extension("zk")
 lvim.colorscheme = "kanagawa"
+lvim.transparent_window = 0.9
 
 lvim.builtin.alpha.dashboard.section.header.val = {
     [[]],
