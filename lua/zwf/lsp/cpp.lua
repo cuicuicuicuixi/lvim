@@ -10,6 +10,8 @@ vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "clangd" })
 
 -- some settings can only passed as commandline flags, see `clangd --help`
 local clangd_flags = {
+  "--log=verbose",
+  "--query-driver=D:/Applications/Scoop/apps/gcc/current/bin/g++*",
   "--background-index",
   "--fallback-style=Google",
   "--all-scopes-completion",
